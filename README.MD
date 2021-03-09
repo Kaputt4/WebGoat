@@ -12,6 +12,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Kaputt4_WebGoat&metric=coverage)](https://sonarcloud.io/dashboard?id=Kaputt4_WebGoat)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Kaputt4_WebGoat&metric=security_rating)](https://sonarcloud.io/dashboard?id=Kaputt4_WebGoat)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Kaputt4_WebGoat&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=Kaputt4_WebGoat)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Kaputt4_WebGoat&metric=code_smells)](https://sonarcloud.io/dashboard?id=Kaputt4_WebGoat)
 
 # Introduction
 
