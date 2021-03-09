@@ -7,6 +7,12 @@
 [![GitHub release](https://img.shields.io/github/release/WebGoat/WebGoat.svg)](https://github.com/WebGoat/WebGoat/releases/latest)
 [![Gitter](https://badges.gitter.im/OWASPWebGoat/community.svg)](https://gitter.im/OWASPWebGoat/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+### SonarCloud
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Kaputt4_WebGoat&metric=bugs)](https://sonarcloud.io/dashboard?id=Kaputt4_WebGoat)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Kaputt4_WebGoat&metric=coverage)](https://sonarcloud.io/dashboard?id=Kaputt4_WebGoat)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Kaputt4_WebGoat&metric=security_rating)](https://sonarcloud.io/dashboard?id=Kaputt4_WebGoat)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Kaputt4_WebGoat&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=Kaputt4_WebGoat)
+
 # Introduction
 
 WebGoat is a deliberately insecure web application maintained by [OWASP](http://www.owasp.org/) designed to teach web
