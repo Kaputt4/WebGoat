@@ -75,7 +75,7 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
                 System.err.println(e.getMessage());
                 return failed(this).feedback("sql-injection.error").output("<br><span class='feedback-negative'>" + e.getMessage() + "</span>").build();
             } finally{
-                statement.close()
+                statement.close();
             }
 
             return checkSalaryRanking(connection, output);
