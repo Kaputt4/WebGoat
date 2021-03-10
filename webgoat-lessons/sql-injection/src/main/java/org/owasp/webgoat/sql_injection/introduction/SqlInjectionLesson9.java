@@ -32,10 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import static org.hsqldb.jdbc.JDBCResultSet.CONCUR_UPDATABLE;
 import static org.hsqldb.jdbc.JDBCResultSet.TYPE_SCROLL_SENSITIVE;
@@ -58,13 +55,14 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
 
     protected AttackResult injectableQueryIntegrity(String name, String auth_tan) {
         StringBuffer output = new StringBuffer();
-        String query = "SELECT * FROM employees WHERE last_name = '" + name + "' AND auth_tan = '" + auth_tan + "'";
+        String query = "SELECT * FROM employees WHERE last_name = ? AND auth_tan = ?";        
         try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
             try {
-                Statement statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
+                statement.setString(1,name);
+                statement.setString(2, auth_tan);
                 SqlInjectionLesson8.log(connection, query);
-                ResultSet results = statement.executeQuery(query);
-                var test = results.getRow() != 0;
+                ResultSet results = statement.executeQuery();
                 if (results.getStatement() != null) {
                     if (results.first()) {
                         output.append(SqlInjectionLesson8.generateTable(results));
@@ -76,6 +74,8 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
                 return failed(this).feedback("sql-injection.error").output("<br><span class='feedback-negative'>" + e.getMessage() + "</span>").build();
+            } finally{
+                statement.close();
             }
 
             return checkSalaryRanking(connection, output);
