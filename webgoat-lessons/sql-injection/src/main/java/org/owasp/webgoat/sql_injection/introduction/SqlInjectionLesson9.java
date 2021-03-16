@@ -56,36 +56,28 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
         return injectableQueryIntegrity(name, auth_tan);
     }
 
-    protected AttackResult injectableQueryIntegrity(String name, String auth_tan) {
+   protected AttackResult injectableQueryIntegrity(String name, String authTan) {
         StringBuffer output = new StringBuffer();
-        String query = "SELECT * FROM employees WHERE last_name = '" + name + "' AND auth_tan = '" + auth_tan + "'";
-        try (Connection connection = dataSource.getConnection()) {
-            try {
-                Statement statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
-                SqlInjectionLesson8.log(connection, query);
-                ResultSet results = statement.executeQuery(query);
-                var test = results.getRow() != 0;
-                if (results.getStatement() != null) {
-                    if (results.first()) {
-                        output.append(SqlInjectionLesson8.generateTable(results));
-                    } else {
-                        // no results
-                        return failed(this).feedback("sql-injection.8.no.results").build();
-                    }
+        String query = "SELECT * FROM employees WHERE last_name = ? AND auth_tan = ?";
+        try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, name);
+            statement.setString(2, authTan);
+            SqlInjectionLesson8.log(connection, query);
+            ResultSet results = statement.executeQuery();
+            if (results.getStatement() != null) {
+                if (results.first()) {
+                    output.append(SqlInjectionLesson8.generateTable(results));
+                } else {
+                    // no results
+                    return failed(this).feedback("sql-injection.8.no.results").build();
                 }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                return failed(this).feedback("sql-injection.error").output("<br><span class='feedback-negative'>" + e.getMessage() + "</span>").build();
             }
-
             return checkSalaryRanking(connection, output);
-
-        } catch (Exception e) {
+        }catch(Exception e){
             System.err.println(e.getMessage());
             return failed(this).feedback("sql-injection.error").output("<br><span class='feedback-negative'>" + e.getMessage() + "</span>").build();
         }
     }
-
     private AttackResult checkSalaryRanking(Connection connection, StringBuffer output) {
         try {
             String query = "SELECT * FROM employees ORDER BY salary DESC";
