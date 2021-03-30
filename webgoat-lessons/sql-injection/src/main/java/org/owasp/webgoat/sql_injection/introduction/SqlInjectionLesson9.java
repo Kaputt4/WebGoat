@@ -55,7 +55,7 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
 
    protected AttackResult injectableQueryIntegrity(String name, String authTan) {
         StringBuffer output = new StringBuffer();
-         String query = "SELECT * FROM employees WHERE last_name = '" + name + "' AND auth_tan = '" + auth_tan + "'";
+         String query = "SELECT * FROM employees WHERE last_name = '" + name + "' AND auth_tan = '" + authTan + "'";
        try (Connection connection = dataSource.getConnection(); 
             PreparedStatement statement = connection.prepareStatement(query)) {
             SqlInjectionLesson8.log(connection, query);
